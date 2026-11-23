@@ -9,7 +9,12 @@ export interface Car {
   type: string;
   capacity: string;
   ac: boolean;
-  ratePerKm: number;
+  baseFare: number;
+  perKmRate: number;
+  includedDistanceKm: number;
+  extraKmRate: number;
+  maxPassengers: number;
+  quoteOnly?: boolean;
   image: string;
   popular?: boolean;
   description: string;
@@ -20,10 +25,7 @@ export interface Excursion {
   destination: string;
   distanceKm: number;
   durationHrs: number;
-  theme: string;
-  typeTag: string;
   description: string;
-  image: string;
 }
 
 export interface Testimonial {

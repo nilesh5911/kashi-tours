@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { X, Calendar, MapPin, CheckCircle, Car as CarIcon, AlertCircle, Sparkles, MessageCircleCode } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { X, CheckCircle, AlertCircle, Sparkles, MessageCircle } from "lucide-react";
 import { CARS } from "../data";
 import { Car } from "../types";
 
@@ -24,14 +24,13 @@ const POPULAR_LOCATIONS = [
   "Bodh Gaya (Mahabodhi Temple)"
 ];
 
-// Simple approximate distances between locations in km (for real calculations!)
-const getDistance = (from: string, to: string): number => {
-  if (!from || !to || from === to) return 10;
-  if (to.includes("Ayodhya") || from.includes("Ayodhya")) return 220;
-  if (to.includes("Prayagraj") || from.includes("Prayagraj")) return 120;
-  if (to.includes("Bodh Gaya") || from.includes("Bodh Gaya")) return 250;
-  if (to.includes("Airport") || from.includes("Airport")) return 24;
-  return 15; // default local city travel
+const getDefaultDateTime = () => {
+  const nextHour = new Date();
+  nextHour.setMinutes(0, 0, 0);
+  nextHour.setHours(nextHour.getHours() + 1);
+  return new Date(nextHour.getTime() - nextHour.getTimezoneOffset() * 60000)
+    .toISOString()
+    .slice(0, 16);
 };
 
 export default function BookingModal({
@@ -44,24 +43,36 @@ export default function BookingModal({
   const [pickup, setPickup] = useState(initialPickup || "Varanasi Cantt Railway Station");
   const [drop, setDrop] = useState(initialDrop || "Lal Bahadur Shastri Airport (VNS)");
   const [tripType, setTripType] = useState("One Way");
-  const [dateTime, setDateTime] = useState("2026-06-02T10:00");
+  const [dateTime, setDateTime] = useState(getDefaultDateTime);
   const [carId, setCarId] = useState(selectedCarId);
+  const [passengers, setPassengers] = useState(1);
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [message, setMessage] = useState("");
   const [stage, setStage] = useState<"form" | "confirm">("form");
   const [errors, setErrors] = useState<Record<string, string>>({});
 
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const nextPickup = initialPickup || "Varanasi Cantt Railway Station";
+    const nextDrop = initialDrop || "Lal Bahadur Shastri Airport (VNS)";
+    setPickup(nextPickup);
+    setDrop(nextDrop);
+    setTripType("One Way");
+    setDateTime(getDefaultDateTime());
+    setCarId(selectedCarId);
+    setPassengers(1);
+    setName("");
+    setPhone("");
+    setMessage("");
+    setStage("form");
+    setErrors({});
+  }, [isOpen, initialPickup, initialDrop, selectedCarId]);
+
   if (!isOpen) return null;
 
   const currentCar = CARS.find((c) => c.id === carId) || CARS[1];
-  const distance = getDistance(pickup, drop);
-  const rate = currentCar.ratePerKm;
-  const rawFare = distance * rate * (tripType === "Round Trip" ? 1.8 : 1.0);
-  const driverCharge = 300; 
-  const luxuryTax = Math.round(rawFare * 0.05); 
-  const totalFare = Math.round(rawFare + driverCharge + luxuryTax);
-
   const handleValidateAndCalculate = (e: React.FormEvent) => {
     e.preventDefault();
     const newErrors: Record<string, string> = {};
@@ -73,6 +84,9 @@ export default function BookingModal({
     }
     if (!pickup) newErrors.pickup = "Pickup location is required";
     if (!drop) newErrors.drop = "Destination is required";
+    if (!Number.isInteger(passengers) || passengers < 1 || passengers > currentCar.maxPassengers) {
+      newErrors.passengers = `Enter 1 to ${currentCar.maxPassengers} passengers for this vehicle`;
+    }
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
@@ -90,82 +104,88 @@ export default function BookingModal({
       `- *Vehicle Type:* ${currentCar.name} (${currentCar.type})\n` +
       `- *Route:* ${pickup} → ${drop}\n` +
       `- *Trip Class:* ${tripType}\n` +
+      `- *Passengers:* ${passengers}\n` +
       `- *Timing:* ${new Date(dateTime).toLocaleString()}\n` +
-      `- *Estimated Luxury Quote:* ₹${totalFare} (incl. driver allowance)\n` +
+      `- *Pricing:* ${currentCar.quoteOnly ? "Customized quote requested" : "Please confirm the current fare with the concierge"}\n` +
       `- *Instructions:* ${message || "None"}\n` +
       `Please confirm availability. Thank you!`;
     return `https://wa.me/918577900710?text=${encodeURIComponent(text)}`;
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#0a0a0a]/80 backdrop-blur-md transition-opacity">
-      <div 
-        className="relative bg-[#0d0d0f] w-full max-w-2xl rounded-3xl luxury-shadow overflow-hidden border border-[#c5a880]/30 transition-transform scale-100"
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80 backdrop-blur-sm transition-opacity">
+      <div
+        className="relative booking-modal bg-[#121215] w-full max-w-2xl h-[calc(100dvh-2rem)] max-h-[900px] flex flex-col rounded-2xl sm:rounded-3xl luxury-shadow overflow-hidden border border-[#c5a880]/30"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex justify-between items-center bg-gradient-to-r from-[#141416] to-[#1c1d21] text-white px-6 py-5 border-b border-[#c5a880]/20">
+        <div className="shrink-0 flex justify-between items-center bg-[#09090b] text-[#f4eee4] px-5 sm:px-6 py-3 sm:py-4 border-b border-[#c5a880]/20">
           <div className="flex items-center gap-3">
-            <Sparkles className="w-5 h-5 text-[#c5a880]" />
+            <Sparkles className="w-5 h-5 text-[#f4eee4]" />
             <div>
               <h3 className="font-display text-lg font-semibold tracking-wide">
-                {stage === "form" ? "Luxury Handcrafted Booking" : "Your Spiritual Journey Summary"}
+                {stage === "form" ? "Book Your Ride" : "Your Spiritual Journey Summary"}
               </h3>
-              <p className="text-[10px] text-[#8c7355] font-sans uppercase tracking-[0.2em] mt-0.5">KASI TOUR Concierge</p>
+              <p className="text-[10px] text-[#f4eee4] font-sans uppercase tracking-[0.2em] mt-0.5">KASI TOUR Concierge</p>
             </div>
           </div>
-          <button 
+          <button
             onClick={onClose}
-            className="p-1.5 hover:bg-white/10 rounded-full transition-colors cursor-pointer text-[#8c7355] hover:text-[#c5a880]"
+            aria-label="Close booking modal"
+            className="min-w-[44px] min-h-[44px] flex items-center justify-center hover:bg-white/10 rounded-full transition-colors cursor-pointer text-[#f4eee4] hover:text-[#f4eee4] focus-visible:ring-2 focus-visible:ring-[#c5a880] focus-visible:outline-none"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {stage === "form" ? (
-          <form onSubmit={handleValidateAndCalculate} className="p-6 md:p-8 space-y-6 overflow-y-auto max-h-[78vh] custom-scrollbar text-white relative">
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-[#c5a880]/5 via-transparent to-transparent pointer-events-none"></div>
-            
+          <form onSubmit={handleValidateAndCalculate} className="relative flex flex-1 min-h-0 flex-col overflow-hidden text-[#f4eee4]">
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-[#c5a880]/[0.025] via-transparent to-transparent pointer-events-none"></div>
+            <div className="relative z-10 flex-1 min-h-0 overflow-y-auto p-5 sm:p-6 space-y-5 custom-scrollbar">
+
             {/* Passenger Info */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 relative z-10">
               <div>
-                <label className="block text-[10px] font-bold font-sans uppercase tracking-widest text-gray-400 mb-2">
-                  Name <span className="text-[#c5a880]">*</span>
+                <label className="block text-[11px] font-bold font-sans uppercase tracking-wider text-[#c7c1b8] mb-2">
+                  Name <span className="text-[#f4eee4]">*</span>
                 </label>
-                <input 
+                <input
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="Gautam Mishra"
-                  className={`w-full bg-transparent border-b ${errors.name ? "border-red-500" : "border-[#c5a880]/30 focus:border-[#c5a880]"} px-2 py-2 text-white outline-none text-sm transition-all placeholder:text-gray-600`}
+                  className={`w-full min-h-11 bg-transparent border-b ${errors.name ? "border-red-500" : "border-[#c5a880]/30 focus:border-[#c5a880]"} px-2 py-2 text-[#f4eee4] outline-none text-sm transition-all placeholder:text-[#9d9790]`}
                 />
                 {errors.name && <p className="text-[10px] text-red-500 mt-1.5">{errors.name}</p>}
               </div>
 
               <div>
-                <label className="block text-[10px] font-bold font-sans uppercase tracking-widest text-gray-400 mb-2">
-                  Phone Number <span className="text-[#c5a880]">*</span>
+                <label className="block text-[11px] font-bold font-sans uppercase tracking-wider text-[#c7c1b8] mb-2">
+                  Phone Number <span className="text-[#f4eee4]">*</span>
                 </label>
-                <input 
+                <input
                   type="text"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   placeholder="+91 85779 00710"
-                  className={`w-full bg-transparent border-b ${errors.phone ? "border-red-500" : "border-[#c5a880]/30 focus:border-[#c5a880]"} px-2 py-2 text-white outline-none text-sm transition-all placeholder:text-gray-600`}
+                  className={`w-full min-h-11 bg-transparent border-b ${errors.phone ? "border-red-500" : "border-[#c5a880]/30 focus:border-[#c5a880]"} px-2 py-2 text-[#f4eee4] outline-none text-sm transition-all placeholder:text-[#9d9790]`}
                 />
                 {errors.phone && <p className="text-[10px] text-red-500 mt-1.5">{errors.phone}</p>}
               </div>
             </div>
 
             {/* Travel Route Info */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 relative z-10">
               <div>
-                <label className="block text-[10px] font-bold font-sans uppercase tracking-widest text-gray-400 mb-2">
+                <label className="block text-[11px] font-bold font-sans uppercase tracking-wider text-[#c7c1b8] mb-2">
                   Pickup Location
                 </label>
                 <select
                   value={pickup}
-                  onChange={(e) => setPickup(e.target.value)}
-                  className="w-full bg-transparent border-b border-[#c5a880]/30 focus:border-[#c5a880] px-2 py-2 text-white outline-none text-sm cursor-pointer [&>option]:bg-[#141416]"
+                  onChange={(e) => {
+                    const nextPickup = e.target.value;
+                    setPickup(nextPickup);
+                  }}
+                  className="w-full min-h-11 bg-transparent border-b border-[#c5a880]/30 focus:border-[#c5a880] px-2 py-2 text-[#f4eee4] outline-none text-sm cursor-pointer [&>option]:bg-[#121215]"
                 >
                   {POPULAR_LOCATIONS.map((loc) => (
                     <option key={loc} value={loc}>{loc}</option>
@@ -174,13 +194,16 @@ export default function BookingModal({
               </div>
 
               <div>
-                <label className="block text-[10px] font-bold font-sans uppercase tracking-widest text-gray-400 mb-2">
+                <label className="block text-[11px] font-bold font-sans uppercase tracking-wider text-[#c7c1b8] mb-2">
                   Drop Destination
                 </label>
                 <select
                   value={drop}
-                  onChange={(e) => setDrop(e.target.value)}
-                  className="w-full bg-transparent border-b border-[#c5a880]/30 focus:border-[#c5a880] px-2 py-2 text-white outline-none text-sm cursor-pointer [&>option]:bg-[#141416]"
+                  onChange={(e) => {
+                    const nextDrop = e.target.value;
+                    setDrop(nextDrop);
+                  }}
+                  className="w-full min-h-11 bg-transparent border-b border-[#c5a880]/30 focus:border-[#c5a880] px-2 py-2 text-[#f4eee4] outline-none text-sm cursor-pointer [&>option]:bg-[#121215]"
                 >
                   {POPULAR_LOCATIONS.map((loc) => (
                     <option key={loc} value={loc}>{loc}</option>
@@ -189,23 +212,42 @@ export default function BookingModal({
               </div>
             </div>
 
-            {/* Timings and type */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10">
+            <div className="relative z-10 max-w-sm">
               <div>
-                <label className="block text-[10px] font-bold font-sans uppercase tracking-widest text-gray-400 mb-2">
+                <label htmlFor="passenger-count" className="block text-[11px] font-bold font-sans uppercase tracking-wider text-[#c7c1b8] mb-2">
+                  Passengers (max {currentCar.maxPassengers})
+                </label>
+                <select
+                  id="passenger-count"
+                  value={passengers}
+                  onChange={(e) => setPassengers(Number(e.target.value))}
+                  aria-invalid={Boolean(errors.passengers)}
+                  className="w-full min-h-11 bg-transparent border-b border-[#c5a880]/30 focus:border-[#c5a880] px-2 py-2 text-[#f4eee4] outline-none text-sm cursor-pointer [&>option]:bg-[#121215]"
+                >
+                  {Array.from({ length: currentCar.maxPassengers }, (_, index) => index + 1).map((count) => (
+                    <option key={count} value={count}>{count} {count === 1 ? "passenger" : "passengers"}</option>
+                  ))}
+                </select>
+                {errors.passengers && <p className="text-[10px] text-red-500 mt-1.5">{errors.passengers}</p>}
+              </div>
+            </div>
+
+            {/* Timings and type */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 relative z-10">
+              <div>
+                <label className="block text-[11px] font-bold font-sans uppercase tracking-wider text-[#c7c1b8] mb-2">
                   Trip Type
                 </label>
-                <div className="flex gap-3">
+                <div className="flex gap-2.5">
                   {["One Way", "Round Trip"].map((type) => (
                     <button
                       key={type}
                       type="button"
                       onClick={() => setTripType(type)}
-                      className={`flex-1 py-2.5 text-[10px] font-bold uppercase tracking-widest rounded-xl border ${
-                        tripType === type 
-                          ? "bg-gradient-to-r from-[#c5a880] to-[#8c7355] text-white border-transparent" 
-                          : "bg-white/5 text-gray-300 border-[#c5a880]/30 hover:border-[#c5a880]/60"
-                      } transition-all`}
+                      className={`flex-1 min-h-11 px-3 py-2.5 text-[10px] font-bold uppercase tracking-wider rounded-xl border ${tripType === type
+                          ? "bg-[#c5a880] text-white border-transparent"
+                          : "bg-[#09090b] text-[#c7c1b8] border-[#c5a880]/30 hover:border-[#c5a880]/60"
+                        } transition-all`}
                     >
                       {type}
                     </button>
@@ -214,45 +256,46 @@ export default function BookingModal({
               </div>
 
               <div>
-                <label className="block text-[10px] font-bold font-sans uppercase tracking-widest text-gray-400 mb-2">
+                <label className="block text-[11px] font-bold font-sans uppercase tracking-wider text-[#c7c1b8] mb-2">
                   Date & Hour
                 </label>
-                <input 
+                <input
                   type="datetime-local"
                   value={dateTime}
                   onChange={(e) => setDateTime(e.target.value)}
-                  className="w-full bg-transparent border-b border-[#c5a880]/30 focus:border-[#c5a880] px-2 py-2 text-white outline-none text-sm transition-all [color-scheme:dark]"
+                  className="w-full min-h-11 bg-transparent border-b border-[#c5a880]/30 focus:border-[#c5a880] px-2 py-2 text-[#f4eee4] outline-none text-sm transition-all [color-scheme:dark]"
                 />
               </div>
             </div>
 
             {/* Select Car Fleet option */}
             <div className="relative z-10">
-              <label className="block text-[10px] font-bold font-sans uppercase tracking-widest text-gray-400 mb-3">
+              <label className="block text-[11px] font-bold font-sans uppercase tracking-wider text-[#c7c1b8] mb-3">
                 Customize Your Fleet Class
               </label>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                 {CARS.map((car) => (
                   <button
                     key={car.id}
                     type="button"
-                    onClick={() => setCarId(car.id)}
-                    className={`relative p-4 rounded-2xl border text-left flex flex-col justify-between transition-all duration-300 ${
-                      carId === car.id 
-                        ? "border-[#c5a880] bg-[#c5a880]/10 ring-1 ring-[#c5a880]" 
-                        : "border-[#c5a880]/20 bg-[#1c1d21] hover:border-[#c5a880]/50"
-                    }`}
+                    onClick={() => {
+                      setCarId(car.id);
+                      setPassengers((count) => Math.min(count, car.maxPassengers));
+                      setErrors((current) => ({ ...current, passengers: "" }));
+                    }}
+                    className={`relative min-h-[132px] p-3.5 rounded-xl border text-left flex flex-col justify-between transition-colors ${carId === car.id
+                        ? "border-[#c5a880] bg-[#c5a880]/10"
+                        : "border-[#353238] bg-[#1b1b1f] hover:border-[#c5a880]/50"
+                      }`}
                   >
-                    {car.popular && (
-                      <span className="absolute -top-2 right-4 bg-gradient-to-r from-[#c5a880] to-[#8c7355] text-white px-2 py-0.5 rounded-full text-[8px] font-bold uppercase tracking-widest">
-                        Popular
-                      </span>
-                    )}
-                    <span className="font-display font-bold text-sm text-white">{car.name}</span>
-                    <span className="text-[10px] text-gray-400 mt-1 uppercase tracking-widest">{car.type}</span>
-                    <div className="flex justify-between items-center mt-4 pt-3 border-t border-[#c5a880]/20">
-                      <span className="text-[10px] text-[#8c7355] font-semibold">{car.capacity} Seats</span>
-                      <span className="text-xs font-bold text-[#c5a880]">₹{car.ratePerKm}/km</span>
+                    <div className="flex items-start justify-between gap-2">
+                      <span className="font-display font-bold text-sm text-[#f4eee4]">{car.name}</span>
+                      {car.popular && <span className="shrink-0 bg-[#c5a880]/20 text-[#f4eee4] px-2 py-1 rounded-full text-[8px] font-bold uppercase tracking-wide">Popular</span>}
+                    </div>
+                    <span className="text-[11px] leading-4 text-[#c7c1b8] mt-2 uppercase tracking-wide">{car.type}</span>
+                    <div className="flex justify-between items-center mt-3 pt-3 border-t border-[#353238]">
+                      <span className="text-[11px] text-[#c7c1b8] font-medium">{car.capacity} Seats</span>
+                      <span className="text-right text-[10px] font-semibold leading-4 text-[#c7c1b8]">Up to {car.maxPassengers} passengers</span>
                     </div>
                   </button>
                 ))}
@@ -261,139 +304,121 @@ export default function BookingModal({
 
             {/* Custom Notes */}
             <div className="relative z-10">
-              <label className="block text-[10px] font-bold font-sans uppercase tracking-widest text-gray-400 mb-2">
+              <label className="block text-[11px] font-bold font-sans uppercase tracking-wider text-[#c7c1b8] mb-2">
                 Pilgimage Travel Notes (Optional)
               </label>
-              <textarea 
+              <textarea
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 placeholder="Tell us about your custom requirements, e.g., senior citizen support, specific Varanasi ghat stoppages, custom garland requests..."
                 rows={3}
-                className="w-full bg-transparent border-b border-[#c5a880]/30 focus:border-[#c5a880] px-2 py-2 text-white outline-none text-sm transition-all resize-none placeholder:text-gray-600"
+                className="w-full bg-transparent border-b border-[#c5a880]/30 focus:border-[#c5a880] px-2 py-3 text-[#f4eee4] outline-none text-sm leading-relaxed transition-all resize-none placeholder:text-[#9d9790]"
               />
             </div>
 
-            {/* Price Preview Frame */}
-            <div className="bg-[#141416] border border-[#c5a880]/20 p-5 rounded-2xl flex items-center justify-between text-sm relative z-10 luxury-shadow">
-              <div>
-                <p className="text-[10px] uppercase tracking-widest text-[#8c7355] mb-1">Simulated Distance Estimate</p>
-                <p className="font-semibold text-white">{distance} km route duration</p>
-              </div>
-              <div className="text-right">
-                <p className="text-[10px] uppercase tracking-widest text-[#8c7355] mb-1">Starting Quote</p>
-                <p className="font-display font-bold text-xl text-[#c5a880]">₹{totalFare}</p>
-              </div>
             </div>
 
-            {/* Submitting Buttons */}
-            <div className="pt-4 flex gap-4 relative z-10">
+            {/* Actions remain visible while the booking details scroll. */}
+            <div className="shrink-0 flex flex-col-reverse sm:flex-row gap-2.5 sm:gap-3 p-4 sm:px-6 border-t border-[#353238] bg-[#121215]">
               <button
                 type="button"
                 onClick={onClose}
-                className="w-1/3 border border-[#c5a880]/30 hover:border-[#c5a880] hover:bg-white/5 py-3.5 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] text-gray-300 transition-colors"
+                className="w-full sm:w-1/3 min-h-12 border border-[#c5a880]/30 hover:border-[#c5a880] hover:bg-[#09090b] px-3 rounded-full text-[11px] font-bold uppercase tracking-wider text-[#c7c1b8] transition-colors"
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                className="w-2/3 bg-gradient-to-r from-[#c5a880] to-[#8c7355] hover:opacity-90 text-white py-3.5 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] transition-all shadow-[0_5px_15px_rgba(197,168,128,0.2)] flex items-center justify-center gap-2"
+                className="w-full sm:w-2/3 min-h-12 bg-[#c5a880] hover:opacity-90 text-white px-3 rounded-full text-[11px] font-bold uppercase tracking-wider transition-all shadow-[0_5px_15px_rgba(197,168,128,0.18)] flex items-center justify-center gap-2"
               >
-                Estimate & Book Now →
+                {currentCar.quoteOnly ? "Request a custom quote →" : "Send booking request →"}
               </button>
             </div>
           </form>
         ) : (
-          <div className="p-6 md:p-8 space-y-6 text-center overflow-y-auto max-h-[78vh] custom-scrollbar">
+          <>
+          <div className="flex-1 min-h-0 overflow-y-auto p-5 sm:p-7 space-y-6 text-center custom-scrollbar">
             <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-emerald-50 text-emerald-600 mb-2">
               <CheckCircle className="w-10 h-10" />
             </div>
-            
+
             <div>
-              <h4 className="font-display text-2xl font-bold text-[#1a1c1d]">Your Journey is Arranged!</h4>
-              <p className="text-sm text-gray-500 mt-1">We have locked in your premium booking details and generated your ticket request.</p>
+              <h4 className="font-display text-2xl font-bold text-[#f5f1ea]">{currentCar.quoteOnly ? "Custom quotation requested" : "Your journey request is ready"}</h4>
+              <p className="text-sm text-[#c7c1b8] mt-1">Review your trip details below and send them to our concierge to confirm availability and pricing.</p>
             </div>
 
             {/* Ticket representation */}
-            <div className="bg-[#f9f9fb] rounded-xl border border-[#d4c4ac]/40 overflow-hidden text-left max-w-md mx-auto luxury-shadow">
-              <div className="bg-[#7a5900] text-white px-4 py-3 flex justify-between items-center text-xs uppercase tracking-widest font-semibold">
+            <div className="bg-[#141417] rounded-xl border border-[#c5a880]/35 overflow-hidden text-left max-w-md mx-auto luxury-shadow">
+              <div className="bg-[#c5a880] text-[#17130d] px-4 py-3 flex justify-between items-center text-xs uppercase tracking-widest font-semibold">
                 <span>KASI TOUR VOUCHER</span>
-                <span className="font-mono text-[10px]">#KT-2026-{(Math.random()*10000).toFixed(0)}</span>
+                <span className="font-mono text-[10px]">#KT-2026-{(Math.random() * 10000).toFixed(0)}</span>
               </div>
               <div className="p-4 space-y-3 text-xs">
-                <div className="flex justify-between pb-2 border-b border-gray-100">
-                  <span className="text-gray-500">GUEST PREFERENCE</span>
-                  <span className="font-semibold text-gray-800">{name}</span>
+                <div className="flex justify-between pb-2 border-b border-white/10">
+                  <span className="text-[#c7c1b8]">GUEST PREFERENCE</span>
+                  <span className="font-semibold text-[#f5f1ea]">{name}</span>
                 </div>
-                <div className="flex justify-between pb-2 border-b border-gray-100">
-                  <span className="text-gray-500">CONTACT</span>
-                  <span className="font-semibold text-gray-800">{phone}</span>
+                <div className="flex justify-between pb-2 border-b border-white/10">
+                  <span className="text-[#c7c1b8]">CONTACT</span>
+                  <span className="font-semibold text-[#f5f1ea]">{phone}</span>
                 </div>
-                <div className="flex justify-between pb-2 border-b border-gray-100">
-                  <span className="text-gray-500">FLEET CLASS SELECTION</span>
-                  <span className="font-semibold text-[#7a5900]">{currentCar.name}</span>
+                <div className="flex justify-between pb-2 border-b border-white/10">
+                  <span className="text-[#c7c1b8]">FLEET CLASS SELECTION</span>
+                  <span className="font-semibold text-[#e5c299]">{currentCar.name}</span>
                 </div>
-                <div className="pb-2 border-b border-gray-100">
-                  <span className="text-gray-500 block mb-1">ROUTE</span>
-                  <span className="font-semibold text-gray-800 block text-normal">{pickup}</span>
-                  <span className="text-gray-400 block text-[10px] my-0.5">pointing down to</span>
-                  <span className="font-semibold text-gray-800 block text-normal">{drop}</span>
+                <div className="pb-2 border-b border-white/10">
+                  <span className="text-[#c7c1b8] block mb-1">ROUTE</span>
+                  <span className="font-semibold text-[#f4eee4] block text-normal">{pickup}</span>
+                  <span className="text-[#9d9790] block text-[10px] my-0.5">pointing down to</span>
+                  <span className="font-semibold text-[#f4eee4] block text-normal">{drop}</span>
                 </div>
-                <div className="flex justify-between pb-2 border-b border-gray-100">
-                  <span className="text-gray-500">JOURNEY TIMING</span>
-                  <span className="font-semibold text-gray-800">{new Date(dateTime).toLocaleString()}</span>
+                <div className="flex justify-between pb-2 border-b border-white/10">
+                  <span className="text-[#c7c1b8]">JOURNEY TIMING</span>
+                  <span className="font-semibold text-[#f5f1ea]">{new Date(dateTime).toLocaleString()}</span>
                 </div>
-                <div className="flex justify-between pb-2 border-b border-gray-100">
-                  <span className="text-gray-500">TRIP CLASSIFICATION</span>
-                  <span className="font-semibold text-gray-800">{tripType}</span>
+                <div className="flex justify-between pb-2 border-b border-white/10">
+                  <span className="text-[#c7c1b8]">TRIP CLASSIFICATION</span>
+                  <span className="font-semibold text-[#f5f1ea]">{tripType}</span>
                 </div>
-                <div className="bg-[#ffdea3]/25 p-3 rounded-lg space-y-1.5 text-[11px]">
-                  <div className="flex justify-between">
-                    <span>Base Luxury Fare ({distance} km)</span>
-                    <span className="font-mono">₹{rawFare}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Professional Chauffeur Allowance</span>
-                    <span className="font-mono">₹{driverCharge}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Luxury Toll & Service Tax (5%)</span>
-                    <span className="font-mono">₹{luxuryTax}</span>
-                  </div>
-                  <div className="flex justify-between border-t border-[#f4b400]/40 pt-2 font-bold text-sm text-[#7a5900]">
-                    <span>Total Inclusive Quote</span>
-                    <span className="font-mono">₹{totalFare}</span>
-                  </div>
+                <div className="flex justify-between pb-2 border-b border-white/10">
+                  <span className="text-[#c7c1b8]">PASSENGERS</span>
+                  <span className="font-semibold text-[#f5f1ea]">{passengers} of {currentCar.maxPassengers}</span>
+                </div>
+                <div className="bg-[#ffdea3]/10 border border-[#c5a880]/20 p-3 rounded-lg text-[11px]">
+                  <p className="font-semibold text-[#e5c299]">{currentCar.quoteOnly ? "Customized quotation requested" : "Fare will be confirmed by our concierge"}</p>
+                  <p className="mt-1 text-[#c7c1b8]">Your booking request will be sent to our team for availability and final details.</p>
                 </div>
               </div>
             </div>
 
-            <div className="p-4 bg-amber-50 text-amber-900 border border-amber-200/50 rounded-xl space-y-2 text-xs text-left max-w-md mx-auto">
+            <div className="p-4 bg-[#17130d] text-[#f5f1ea] border border-[#c5a880]/30 rounded-xl space-y-2 text-xs text-left max-w-md mx-auto">
               <div className="flex gap-2 items-center">
-                <AlertCircle className="w-4 h-4 text-amber-700 inline shrink-0" />
+                <AlertCircle className="w-4 h-4 text-[#e5c299] inline shrink-0" />
                 <span className="font-semibold">Next Concierge Verification Step:</span>
               </div>
               <p>Because spiritual journeys in Kashi are tailored personally, we verify each request manually. Click below to instantly launch WhatsApp with your pre-packaged voucher details.</p>
             </div>
 
-            <div className="flex gap-3 justify-center max-w-md mx-auto">
+          </div>
+          <div className="shrink-0 flex flex-col-reverse sm:flex-row gap-2.5 p-4 sm:px-6 border-t border-[#353238] bg-[#121215]">
               <button
                 type="button"
                 onClick={() => setStage("form")}
-                className="px-5 py-3 border border-gray-300 rounded-full text-xs font-bold uppercase transition hover:bg-gray-100 cursor-pointer"
+                className="w-full sm:w-auto min-h-12 px-5 py-3 border border-[#c5a880]/30 rounded-full text-xs font-bold uppercase text-[#c7c1b8] transition hover:bg-[#09090b] cursor-pointer"
               >
                 Edit Details
               </button>
-              
+
               <a
                 href={handleCreateWhatsAppLink()}
                 target="_blank"
                 rel="noreferrer"
-                className="flex-1 bg-[#25D366] text-white py-3 px-5 rounded-full text-xs font-bold uppercase tracking-wider hover:brightness-105 transition shadow-lg flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full sm:flex-1 min-h-12 bg-[#25D366] text-white py-3 px-5 rounded-full text-xs font-bold uppercase tracking-wider hover:brightness-105 transition flex items-center justify-center gap-2 cursor-pointer"
               >
-                <MessageCircleCode className="w-4 h-4" /> WhatsApp Booking Confirm
+                <MessageCircle className="w-4 h-4" /> {currentCar.quoteOnly ? "Request quote on WhatsApp" : "WhatsApp Booking Confirm"}
               </a>
-            </div>
           </div>
+          </>
         )}
       </div>
     </div>

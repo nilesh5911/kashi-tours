@@ -1,94 +1,72 @@
 import React from "react";
-import { Phone, Mail, MapPin, Instagram, Facebook, Share2 } from "lucide-react";
+import { Phone, Mail, MapPin } from "lucide-react";
 
 interface FooterProps {
   onNavTab: (tab: string) => void;
 }
 
 export default function Footer({ onNavTab }: FooterProps) {
+  const handleLogoClick = () => {
+    onNavTab("home");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
-    <footer className="bg-[#0d0d0f] text-gray-300 w-full pt-20 pb-10 border-t border-[#c5a880]/10 font-sans mt-20 relative overflow-hidden">
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] bg-[#c5a880]/5 blur-[120px] rounded-[100%] pointer-events-none"></div>
-      
-      <div className="max-w-[1280px] mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-4 gap-12 relative z-10">
-        
+    <footer role="contentinfo" aria-label="Footer navigation" className="bg-[#121215] text-[#f4eee4] border-t border-[#353238] w-full pt-12 pb-10 font-sans mt-1 relative overflow-hidden">
+      <div className="max-w-[1280px] mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-3 gap-12 relative z-10">
+
         {/* Branding & description */}
         <div className="space-y-5">
-          <button 
-            onClick={() => onNavTab("home")}
-            className="font-display text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#e5c299] to-[#8c7355] tracking-[0.2em] cursor-pointer hover:opacity-85 transition-opacity"
+          <button
+            onClick={handleLogoClick}
+            aria-label="KASI TOUR Home"
+            className="flex items-center gap-3 cursor-pointer hover:opacity-85 transition-opacity focus-visible:ring-2 focus-visible:ring-[#c5a880] focus-visible:outline-none rounded-md"
           >
-            KASI TOUR
+            <img
+              src="/images/WhatsApp Image 2026-05-31 at 11.27.48 AM-jukebox-bg-removed.png"
+              alt="KASI TOUR Logo"
+              className="h-16 w-auto object-contain"
+            />
           </button>
-          <p className="text-xs text-gray-400 leading-relaxed max-w-sm">
+          <p className="text-xs text-[#c7c1b8] leading-relaxed max-w-sm">
             Luxury travel and spiritual journeys in the heart of India. Dedicated to making every single mile a beautiful lifetime memory.
           </p>
-          <div className="flex gap-5 pt-2">
-            <a href="#" className="text-gray-400 hover:text-[#c5a880] transition-colors hover:scale-110 transform">
-              <Facebook className="w-4 h-4" />
-            </a>
-            <a href="#" className="text-gray-400 hover:text-[#c5a880] transition-colors hover:scale-110 transform">
-              <Instagram className="w-4 h-4" />
-            </a>
-            <a href="#" className="text-gray-400 hover:text-[#c5a880] transition-colors hover:scale-110 transform">
-              <Share2 className="w-4 h-4" />
-            </a>
-          </div>
         </div>
 
-        {/* Services mapping */}
+        {/* Core navigation */}
         <div className="space-y-5">
-          <h4 className="text-xs font-sans font-bold text-white uppercase tracking-[0.15em]">
-            Services
+          <h4 className="text-xs font-sans font-bold text-[#f4eee4] uppercase tracking-[0.15em]">
+            Explore
           </h4>
           <ul className="space-y-3 text-xs">
             <li>
-              <button onClick={() => onNavTab("home")} className="text-gray-400 hover:text-[#c5a880] transition-colors cursor-pointer flex items-center gap-2 group">
-                <span className="w-1.5 h-px bg-[#c5a880] opacity-0 group-hover:opacity-100 transition-opacity"></span> Luxury Fleet
+              <button onClick={() => onNavTab("home")} className="text-[#c7c1b8] hover:text-[#f4eee4] transition-colors cursor-pointer flex items-center gap-2 group">
+                <span className="w-1.5 h-px bg-[#c5a880] opacity-0 group-hover:opacity-100 transition-opacity"></span> Fleet &amp; Fare
               </button>
             </li>
             <li>
-              <button onClick={() => onNavTab("tours")} className="text-gray-400 hover:text-[#c5a880] transition-colors cursor-pointer flex items-center gap-2 group">
-                <span className="w-1.5 h-px bg-[#c5a880] opacity-0 group-hover:opacity-100 transition-opacity"></span> Ghat &amp; City Tours
+              <button onClick={() => onNavTab("tours")} className="text-[#c7c1b8] hover:text-[#f4eee4] transition-colors cursor-pointer flex items-center gap-2 group">
+                <span className="w-1.5 h-px bg-[#c5a880] opacity-0 group-hover:opacity-100 transition-opacity"></span> Spiritual Tours
               </button>
             </li>
             <li>
-              <button onClick={() => onNavTab("tours")} className="text-gray-400 hover:text-[#c5a880] transition-colors cursor-pointer flex items-center gap-2 group">
-                <span className="w-1.5 h-px bg-[#c5a880] opacity-0 group-hover:opacity-100 transition-opacity"></span> Outstation Travel
+              <button onClick={() => onNavTab("comparison")} className="text-[#c7c1b8] hover:text-[#f4eee4] transition-colors cursor-pointer flex items-center gap-2 group">
+                <span className="w-1.5 h-px bg-[#c5a880] opacity-0 group-hover:opacity-100 transition-opacity"></span> Compare Vehicles
               </button>
             </li>
             <li>
-              <button onClick={() => onNavTab("home")} className="text-gray-400 hover:text-[#c5a880] transition-colors cursor-pointer flex items-center gap-2 group">
-                <span className="w-1.5 h-px bg-[#c5a880] opacity-0 group-hover:opacity-100 transition-opacity"></span> Wedding Events Car
-              </button>
-            </li>
-          </ul>
-        </div>
-
-        {/* Quick Links mapping */}
-        <div className="space-y-5">
-          <h4 className="text-xs font-sans font-bold text-white uppercase tracking-[0.15em]">
-            Quick Links
-          </h4>
-          <ul className="space-y-3 text-xs">
-            <li>
-              <button onClick={() => onNavTab("comparison")} className="text-gray-400 hover:text-[#c5a880] transition-colors cursor-pointer flex items-center gap-2 group">
-                <span className="w-1.5 h-px bg-[#c5a880] opacity-0 group-hover:opacity-100 transition-opacity"></span> Luxury Tier Specs
-              </button>
-            </li>
-            <li>
-              <button onClick={() => onNavTab("contact")} className="text-gray-400 hover:text-[#c5a880] transition-colors cursor-pointer flex items-center gap-2 group">
+              <button onClick={() => onNavTab("contact")} className="text-[#c7c1b8] hover:text-[#f4eee4] transition-colors cursor-pointer flex items-center gap-2 group">
                 <span className="w-1.5 h-px bg-[#c5a880] opacity-0 group-hover:opacity-100 transition-opacity"></span> Contact &amp; Inquiry
               </button>
             </li>
             <li>
-              <a href="#" className="text-gray-400 hover:text-[#c5a880] transition-colors flex items-center gap-2 group">
-                <span className="w-1.5 h-px bg-[#c5a880] opacity-0 group-hover:opacity-100 transition-opacity"></span> Privacy Policy
-              </a>
-            </li>
-            <li>
-              <a href="#" className="text-gray-400 hover:text-[#c5a880] transition-colors flex items-center gap-2 group">
-                <span className="w-1.5 h-px bg-[#c5a880] opacity-0 group-hover:opacity-100 transition-opacity"></span> Terms of Service
+              <a 
+                href="https://vedicseva.vercel.app/" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="text-[#e5c299] hover:text-white transition-colors flex items-center gap-2 group font-medium"
+              >
+                <span className="w-1.5 h-px bg-[#c5a880] opacity-0 group-hover:opacity-100 transition-opacity"></span> Book Pandit Seva (VedicSeva) ↗
               </a>
             </li>
           </ul>
@@ -96,28 +74,28 @@ export default function Footer({ onNavTab }: FooterProps) {
 
         {/* Contacts details mappings */}
         <div className="space-y-5">
-          <h4 className="text-xs font-sans font-bold text-white uppercase tracking-[0.15em]">
+          <h4 className="text-xs font-sans font-bold text-[#f4eee4] uppercase tracking-[0.15em]">
             Contact Information
           </h4>
           <ul className="space-y-4 text-xs">
-            <li className="flex items-center gap-3 text-gray-400 group">
-              <Phone className="w-4 h-4 text-[#8c7355] shrink-0 group-hover:text-[#c5a880] transition-colors" />
-              <span className="group-hover:text-white transition-colors">8577900710</span>
+            <li className="flex items-center gap-3 text-[#c7c1b8] group">
+              <Phone className="w-4 h-4 text-[#c5a880] shrink-0 group-hover:text-[#e5c299] transition-colors" />
+              <a href="tel:8577900710" className="group-hover:text-[#f4eee4] transition-colors">8577900710</a>
             </li>
-            <li className="flex items-center gap-3 text-gray-400 group">
-              <Mail className="w-4 h-4 text-[#8c7355] shrink-0 group-hover:text-[#c5a880] transition-colors" />
-              <span className="group-hover:text-white transition-colors">kasitour65@gmail.com</span>
+            <li className="flex items-center gap-3 text-[#c7c1b8] group">
+              <Mail className="w-4 h-4 text-[#c5a880] shrink-0 group-hover:text-[#e5c299] transition-colors" />
+              <a href="mailto:kasitour65@gmail.com" className="group-hover:text-[#f4eee4] transition-colors">kasitour65@gmail.com</a>
             </li>
-            <li className="flex items-start gap-3 text-gray-400 group">
-              <MapPin className="w-4 h-4 text-[#8c7355] shrink-0 mt-0.5 group-hover:text-[#c5a880] transition-colors" />
-              <span className="leading-relaxed group-hover:text-white transition-colors">Chetganj, Varanasi, Uttar Pradesh 221010</span>
+            <li className="flex items-start gap-3 text-[#c7c1b8] group">
+              <MapPin className="w-4 h-4 text-[#f4eee4] shrink-0 mt-0.5 group-hover:text-[#f4eee4] transition-colors" />
+              <span className="leading-relaxed group-hover:text-[#f4eee4] transition-colors">Chetganj, Varanasi, Uttar Pradesh 221010</span>
             </li>
           </ul>
         </div>
 
       </div>
 
-      <div className="mt-16 border-t border-[#c5a880]/10 pt-6 text-center text-[10px] text-gray-500 tracking-wider uppercase">
+      <div className="mt-16 border-t border-[#4b4132] pt-6 text-center text-[10px] text-[#9d9790] tracking-wider uppercase">
         <p>© 2026 KASI TOUR. All rights reserved.</p>
       </div>
     </footer>

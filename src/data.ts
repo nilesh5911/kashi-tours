@@ -5,23 +5,31 @@ export const CARS: Car[] = [
     id: "dzire",
     name: "Swift Dzire",
     tagline: "The Reliable Classic",
-    type: "Sedan / Executive",
+    type: "Sedan / Swift Dzire",
     capacity: "4+1",
     ac: true,
-    ratePerKm: 12,
-    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuDKOo9JlgGDPERMf4fPYDd1Hihpx0AuxvgxFD11CcmNMGRVvXHEaKdNaGMMAkZz6VTg3Ck0TfQu3iOASI5hCIUlowbHqK2cmNGbtFQU1aE5ghGZ6gSQfQ6iBjiqzZfvOUUFylcO9SazT7lv-Xe3idzXxi6oyyYSU4LFhkqFyhkSEqu9a3O3cssRIQlp09fogae8R0YBTQmYIU8GFzxeFmnO-M03gfvdz9amBdmFAZkvDCVHrRxKukLltufVITt6dPSM2NBnZfmVIwo",
+    baseFare: 2500,
+    perKmRate: 21,
+    includedDistanceKm: 120,
+    extraKmRate: 12,
+    maxPassengers: 4,
+    image: "https://www.savitoursandtravels.in/assets/vehicles/maruti-dzire/dezire.jpeg",
     description: "Punctual, spotless and comfortable choice for transfers to VNS Airport and local city travel with professional chauffeur assistance."
   },
   {
     id: "innova",
     name: "Innova Crysta",
     tagline: "The Golden Standard of Comfort",
-    type: "Premium MPV / Luxury",
+    type: "Premium SUV / Innova Crysta",
     capacity: "6+1",
     ac: true,
-    ratePerKm: 18,
+    baseFare: 3800,
+    perKmRate: 32,
+    includedDistanceKm: 120,
+    extraKmRate: 15,
+    maxPassengers: 6,
     popular: true,
-    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuDQerpjgI8eX4UGeBTsx_kZFV2pZjOy-VxNmOI2q988WlImXNjggq7zsr5BqhQVm1O7HjYY2-5UkoOnNPzTc5k7bS_XdzwNeFmzoYLbDiNdhyM6Zw4fF_e5JPQusdtei1JYCnwfaImWnuNIaByg94sZt2P0guludo57yNQNlbKamYKCZzeAxhtW64KhHvfS-2B-YRovR2mMT9up3_HJCqRcKMXVmaquwsKeanZRpOJrkoxOj36OdomWGv38BhUmM1lMb1gPzbH5W5c",
+    image: "https://images.unsplash.com/photo-1748215210950-536c6621629a?auto=format&fit=crop&fm=jpg&q=85&w=1200",
     description: "Robust yet luxurious, perfectly suited for family travel, long-distance excursions and group tours. Offers supreme ride comfort."
   },
   {
@@ -31,8 +39,13 @@ export const CARS: Car[] = [
     type: "Luxury Coach / Premium",
     capacity: "12-26",
     ac: true,
-    ratePerKm: 25,
-    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuALAk961sPgJbO4PN3epQotMHe8I_hr8Oq8O5oVT9lYjnfmtQWu6yanKyzfwxbiUYOYMsvMiJvI83Ly6lOQWJgXcBo-MuALym2ctGJBx_nVWMvouqcaHLcLDhu_-MCxq6uz6BLbKt-1z2x33Zx0ktlCu6wCQd8M36_6dicBfXfuavQWJjW_n6_h3OK7XpHI4ObxQGQCnh40t08Ek9sFAm1zg8seMaMsxFUQ0vN03DYwzKqp3LsmWZ2Dwr7k13CaZ2_LIWH0myqICIE",
+    baseFare: 0,
+    perKmRate: 0,
+    includedDistanceKm: 0,
+    extraKmRate: 0,
+    maxPassengers: 26,
+    quoteOnly: true,
+    image: "https://www.tempotravellerhire.in/jap/media/uploads/12-seater-deluxe2.jpg",
     description: "Premium, customized mini-coach with tinted screens and extra luggage space. Built for comfortable collective pilgrimages and celebrations."
   }
 ];
@@ -43,60 +56,42 @@ export const EXCURSIONS: Excursion[] = [
     destination: "Ayodhya",
     distanceKm: 220,
     durationHrs: 4.5,
-    theme: "Divine Heritage",
-    typeTag: "Lord Ram's Birthplace",
-    description: "The birthplace of Lord Ram. A journey of faith and spiritual surrender to the holy banks of the Saryu River.",
-    image: "https://images.unsplash.com/photo-1608976451630-f655ae8bccc0?auto=format&fit=crop&q=80&w=600"
+    description: "Visit the revered birthplace of Lord Ram and the sacred banks of the Saryu River."
   },
   {
     id: "prayagraj",
     destination: "Prayagraj",
     distanceKm: 120,
     durationHrs: 2.5,
-    theme: "Holy Bath",
-    typeTag: "The sacred Triveni Sangam",
-    description: "The divine confluence of Ganga, Yamuna, and Saraswati. Experience spiritual rituals and sacred bathing pools.",
-    image: "https://images.unsplash.com/photo-1545638136-1e96a4a60f9e?auto=format&fit=crop&q=80&w=600"
+    description: "Visit the Triveni Sangam, the meeting point of the Ganga, Yamuna, and Saraswati."
   },
   {
     id: "bodhgaya",
     destination: "Bodh Gaya",
     distanceKm: 250,
     durationHrs: 5.5,
-    theme: "Zen Bliss",
-    typeTag: "Enlightenment Site",
-    description: "The place of ultimate cosmic peace. Walk near the sacred Bodhi Tree where Buddha attained supreme enlightenment.",
-    image: "https://images.unsplash.com/photo-1609137144814-7cf6bdfb295f?auto=format&fit=crop&q=80&w=600"
+    description: "Explore the Mahabodhi Temple and the site associated with the Buddha’s enlightenment."
   },
   {
     id: "vindhyachal",
     destination: "Vindhyachal",
     distanceKm: 65,
     durationHrs: 1.5,
-    theme: "Divine Energy",
-    typeTag: "Shakti Peeth Triangle",
-    description: "Revered center of power. Explore the mystical triangle of Vindhyavasini, Kali Khoh, and Ashtabhuja temples.",
-    image: "https://images.unsplash.com/photo-1600121848594-d8644e57abad?auto=format&fit=crop&q=80&w=600"
+    description: "Explore the Vindhyavasini, Kali Khoh, and Ashtabhuja temples."
   },
   {
     id: "gorakhpur",
     destination: "Gorakhpur",
     distanceKm: 230,
     durationHrs: 4.5,
-    theme: "Ancient Sect",
-    typeTag: "Nath Monastic Center",
-    description: "Explore the historic Gorakhnath Temple, featuring dynamic spiritual heritage and peaceful monastic settings.",
-    image: "https://images.unsplash.com/photo-1602616693717-de7457ef45aa?auto=format&fit=crop&q=80&w=600"
+    description: "Visit Gorakhnath Temple and experience the city’s Nath spiritual heritage."
   },
   {
     id: "lucknow",
     destination: "Lucknow",
     distanceKm: 320,
     durationHrs: 6.0,
-    theme: "Cultural Grace",
-    typeTag: "City of Nawabs",
-    description: "Traverse the historic paths of fine culinary, majestic architectures, and mystical Sufi spiritual shrines.",
-    image: "https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&q=80&w=600"
+    description: "Discover historic architecture, Awadhi cuisine, and Sufi heritage in the City of Nawabs."
   }
 ];
 
@@ -143,3 +138,47 @@ export const COMPARISONS = [
   { amenity: "Certified Spiritual Guide Service", executive: false, luxury: "+", premium: true },
   { amenity: "Airport Meet & Greet Service", executive: false, luxury: true, premium: true }
 ];
+
+export interface FareBreakdown {
+  pricingOption: "perKm" | "package";
+  distanceKm: number;
+  baseFare: number;
+  includedDistanceKm: number;
+  perKmRate: number;
+  perKmCharge: number;
+  extraDistanceKm: number;
+  extraDistanceCharge: number;
+  totalFare: number;
+}
+
+export type PricingOption = "perKm" | "package";
+
+export function calculateVehicleFare(
+  car: Car,
+  distanceKm: number,
+  pricingOption: PricingOption = "package",
+): FareBreakdown | null {
+  if (car.quoteOnly || !Number.isFinite(distanceKm) || distanceKm < 0) return null;
+
+  const extraDistanceKm = pricingOption === "package"
+    ? Math.max(0, distanceKm - car.includedDistanceKm)
+    : 0;
+  const perKmCharge = pricingOption === "perKm" ? distanceKm * car.perKmRate : 0;
+  const extraDistanceCharge = pricingOption === "package"
+    ? extraDistanceKm * car.extraKmRate
+    : 0;
+
+  return {
+    pricingOption,
+    distanceKm,
+    baseFare: pricingOption === "package" ? car.baseFare : 0,
+    includedDistanceKm: car.includedDistanceKm,
+    perKmRate: car.perKmRate,
+    perKmCharge,
+    extraDistanceKm,
+    extraDistanceCharge,
+    totalFare: pricingOption === "perKm"
+      ? Math.round(perKmCharge * 100) / 100
+      : car.baseFare + extraDistanceCharge,
+  };
+}
