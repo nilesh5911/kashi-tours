@@ -53,7 +53,7 @@ export default function FleetTab({ onBookCar }: FleetTabProps) {
             className="absolute bottom-0 left-0 right-0 z-0 mx-auto flex h-[230px] w-full items-end justify-center will-change-transform sm:h-[270px] md:bottom-0 md:left-auto md:right-[-1%] md:h-[390px] md:w-[58%]"
           >
             <div className="absolute bottom-4 left-1/2 h-8 w-[80%] -translate-x-1/2 rounded-[100%] bg-[#c5a880]/20 blur-2xl md:bottom-8 md:h-14" />
-            <img src="https://freepngimg.com/thumb/car/4-2-car-png-hd.png" alt="White premium chauffeur-driven car" draggable={false} className="relative z-10 max-h-full w-[90%] object-contain drop-shadow-[0_24px_35px_rgba(0,0,0,0.55)] md:w-full" />
+            <img src="../assets/4-2-car-png-hd.png" alt="White premium chauffeur-driven car" draggable={false} className="relative z-10 max-h-full w-[90%] object-contain drop-shadow-[0_24px_35px_rgba(0,0,0,0.55)] md:w-full" />
           </motion.div>
         </div>
       </section>
@@ -64,8 +64,8 @@ export default function FleetTab({ onBookCar }: FleetTabProps) {
             <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#c5a880]/15 text-[#e5c299]"><Calculator className="h-5 w-5" /></span>
             <div><p className="font-display text-base font-semibold text-[#f4eee4]">Plan your journey with confidence</p><p className="mt-0.5 text-xs text-[#c7c1b8]">Get a clear trip cost before you book.</p></div>
           </div>
-          <a 
-            href="/cost-estimator" 
+          <a
+            href="/cost-estimator"
             onClick={(e) => {
               e.preventDefault();
               window.history.pushState({}, "", "/cost-estimator");
