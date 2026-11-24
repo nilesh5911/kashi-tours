@@ -12,8 +12,8 @@ export default function Footer({ onNavTab }: FooterProps) {
   };
 
   return (
-    <footer role="contentinfo" aria-label="Footer navigation" className="bg-[#121215] text-[#f4eee4] border-t border-[#353238] w-full pt-12 pb-10 font-sans mt-1 relative overflow-hidden">
-      <div className="max-w-[1280px] mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-3 gap-12 relative z-10">
+    <footer role="contentinfo" aria-label="Footer navigation" className="bg-[#121215] text-[#f4eee4] border-t border-[#353238] w-full pt-10 sm:pt-12 pb-8 sm:pb-10 font-sans mt-1 relative overflow-hidden">
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 md:px-12 grid grid-cols-1 md:grid-cols-3 gap-8 sm:gap-10 md:gap-12 relative z-10">
 
         {/* Branding & description */}
         <div className="space-y-5">
@@ -95,7 +95,7 @@ export default function Footer({ onNavTab }: FooterProps) {
 
       </div>
 
-      <div className="mt-16 border-t border-[#4b4132] pt-6 text-center text-[10px] text-[#9d9790] tracking-wider uppercase">
+      <div className="mt-10 sm:mt-16 border-t border-[#4b4132] pt-6 px-4 text-center text-[10px] text-[#9d9790] tracking-wider uppercase">
         <p>© 2026 KASI TOURS. All rights reserved.</p>
       </div>
     </footer>

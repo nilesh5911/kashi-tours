@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { MessageCircle } from "lucide-react";
+import { MessageCircle, Info } from "lucide-react";
 import { calculateVehicleFare, CARS, type PricingOption } from "../data";
 
 const formatINR = (amount: number) => `₹${amount.toLocaleString("en-IN", { maximumFractionDigits: 2 })}`;
@@ -23,7 +23,7 @@ export default function CostEstimator() {
             <div className="mt-3 grid gap-3 sm:grid-cols-3">
               {CARS.map((car) => (
                 <button key={car.id} type="button" aria-pressed={carId === car.id} onClick={() => { setCarId(car.id); setPassengers((count) => Math.min(count, car.maxPassengers)); }} className={`rounded-xl border p-4 text-left transition ${carId === car.id ? "border-[#c5a880] bg-[#c5a880]/10" : "border-[#353238] bg-[#1b1b1f] hover:border-[#c5a880]/50"}`}>
-                  <span className="block font-display text-base font-semibold text-[#f4eee4]">{car.name}</span>
+                  <span className="block font-sans text-base font-semibold text-[#f4eee4]">{car.name}</span>
                   <span className="mt-1 block text-[10px] uppercase tracking-wide text-[#a59b8e]">Up to {car.maxPassengers} passengers</span>
                   <span className="mt-3 block text-xs font-semibold text-[#e5c299]">{car.quoteOnly ? "Contact for Pricing" : `${formatINR(car.baseFare)} · 120 km package`}</span>
                 </button>
@@ -70,6 +70,10 @@ export default function CostEstimator() {
                 <div><p className="text-[10px] uppercase tracking-wider text-[#c7c1b8]">Total fare</p><p className="font-display text-2xl font-bold text-[#e5c299]">{formatINR(fare.totalFare)}</p></div>
                 <p className="text-right text-xs text-[#c7c1b8]">{passengers} {passengers === 1 ? "passenger" : "passengers"}<span className="mt-1 block font-semibold text-[#f4eee4]">{formatINR(fare.totalFare / passengers)} per person</span></p>
               </div>
+              <div className="mt-3 flex items-center gap-2 rounded-lg bg-[#141417] border border-[#c5a880]/20 px-3 py-2 text-[11px] text-[#c7c1b8]">
+                <Info className="h-3.5 w-3.5 shrink-0 text-[#c5a880]" />
+                <span>Toll charges and parking fees are not included in the quoted price and must be paid separately by the customer.</span>
+              </div>
             </div>}
           </>}
 
@@ -77,6 +81,10 @@ export default function CostEstimator() {
             <p className="font-display text-xl font-semibold text-[#f4eee4]">Tempo Traveller</p>
             <p className="mt-1 text-sm font-semibold text-[#e5c299]">Contact for Pricing</p>
             <p className="mt-2 text-xs leading-5 text-[#c7c1b8]">Contact our team for a customized quotation for your group.</p>
+            <div className="mt-3 flex items-center gap-2 rounded-lg bg-[#141417] border border-[#c5a880]/20 px-3 py-2 text-[11px] text-[#c7c1b8]">
+              <Info className="h-3.5 w-3.5 shrink-0 text-[#c5a880]" />
+              <span>Toll charges and parking fees are not included in the quoted price and must be paid separately by the customer.</span>
+            </div>
             <div className="mt-4 grid gap-3 sm:grid-cols-2">
               <a href="https://wa.me/918577900710?text=Hello%20Kasi%20Tours%2C%20please%20share%20a%20Tempo%20Traveller%20quotation." target="_blank" rel="noreferrer" className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-[#25D366] px-4 text-xs font-bold uppercase tracking-wide text-white"><MessageCircle className="h-4 w-4" /> WhatsApp</a>
               <a href="tel:+918577900710" className="inline-flex min-h-11 items-center justify-center rounded-lg border border-[#c5a880]/40 px-4 text-xs font-bold uppercase tracking-wide text-[#f4eee4]">Call 85779 00710</a>

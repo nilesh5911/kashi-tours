@@ -32,7 +32,7 @@ export default function ContactTab() {
     <div className="space-y-12 pb-16">
 
       {/* Visual Header matching Screen 1 */}
-      <section className="relative z-0 min-h-[50vh] flex flex-col justify-center items-center pt-24 text-center overflow-hidden">
+      <section className="relative z-0 min-h-[430px] sm:min-h-[50vh] flex flex-col justify-center items-center px-4 pt-24 pb-10 text-center overflow-hidden">
         <div className="absolute inset-0 -z-10 bg-[#09090b]">
           <img
             className="w-full h-full object-cover opacity-100"
@@ -42,25 +42,25 @@ export default function ContactTab() {
           <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/25 to-[#09090b]/95"></div>
         </div>
 
-        <div className="relative z-10 max-w-3xl px-6 space-y-6">
+        <div className="relative z-10 max-w-3xl space-y-4 sm:space-y-6">
           <span className="text-[#e5c299] font-sans text-[10px] font-bold uppercase tracking-[0.4em] block drop-shadow-md">
             Connect with Divinity
           </span>
-          <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold text-white leading-tight drop-shadow-xl">
+          <h1 className="font-display text-3xl sm:text-5xl md:text-6xl font-bold text-white leading-tight drop-shadow-xl">
             Your Journey to <br className="hidden sm:block" /> <span className="italic font-normal text-gold-gradient">Varanasi Starts Here</span>
           </h1>
           <div className="h-0.5 w-24 bg-gradient-to-r from-transparent via-[#e5c299] to-transparent mx-auto"></div>
-          <p className="font-sans text-sm md:text-base text-gray-300 leading-loose max-w-2xl mx-auto font-light tracking-wide">
+          <p className="font-sans text-xs sm:text-sm md:text-base text-gray-300 leading-relaxed sm:leading-loose max-w-2xl mx-auto font-light tracking-wide">
             Whether you're seeking a luxury pilgrimage or a spiritual fleet for your family, our concierges are ready to orchestrate your experience with ancient wisdom and modern integrity.
           </p>
         </div>
       </section>
 
       {/* Main Split Layout: Form & Map */}
-      <section className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start max-w-[1280px] mx-auto px-6 md:px-12">
+      <section className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 items-start max-w-[1280px] mx-auto px-4 sm:px-6 md:px-12">
 
         {/* Left Hand: Inquiry Form card */}
-        <div className="glass-panel rounded-3xl border border-[#c5a880]/20 p-8 md:p-10 luxury-shadow space-y-8">
+        <div className="glass-panel rounded-2xl sm:rounded-3xl border border-[#c5a880]/20 p-5 sm:p-8 md:p-10 luxury-shadow space-y-6 sm:space-y-8">
           <h2 className="font-display text-2xl font-bold text-white pb-4 border-b border-[#353238]">
             Submit Travel Inquiry
           </h2>
@@ -78,13 +78,15 @@ export default function ContactTab() {
                   <label htmlFor="contact-name" className="text-[10px] font-sans font-bold uppercase tracking-widest text-[#f4eee4] block">Name</label>
                   <input
                     id="contact-name"
-                    type="text"
+                    type="tel"
+                    inputMode="tel"
+                    autoComplete="tel"
                     required
                     aria-required="true"
                     placeholder="Your name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="w-full bg-transparent border-b border-[#4b4132] focus:border-[#8c7355] outline-none px-2 py-2 text-sm font-semibold text-[#f4eee4] placeholder:text-[#81796e] transition-colors focus-visible:ring-2 focus-visible:ring-[#c5a880]"
+                    className="w-full min-h-12 bg-transparent border-b border-[#4b4132] focus:border-[#8c7355] outline-none px-2 py-2 text-sm font-semibold text-[#f4eee4] placeholder:text-[#81796e] transition-colors focus-visible:ring-2 focus-visible:ring-[#c5a880]"
                   />
                 </div>
                 <div className="space-y-2">
@@ -108,7 +110,7 @@ export default function ContactTab() {
                   id="contact-service"
                   value={serviceType}
                   onChange={(e) => setServiceType(e.target.value)}
-                  className="w-full bg-transparent border-b border-[#4b4132] focus:border-[#8c7355] outline-none px-2 py-2 text-sm font-semibold text-[#f4eee4] [&>option]:bg-[#1b1b1f] [&>option]:text-[#f4eee4] cursor-pointer transition-colors focus-visible:ring-2 focus-visible:ring-[#c5a880]"
+                  className="w-full min-h-12 bg-transparent border-b border-[#4b4132] focus:border-[#8c7355] outline-none px-2 py-2 text-sm font-semibold text-[#f4eee4] [&>option]:bg-[#1b1b1f] [&>option]:text-[#f4eee4] cursor-pointer transition-colors focus-visible:ring-2 focus-visible:ring-[#c5a880]"
                 >
                   <option value="Spiritual Ghat Tour">Spiritual Ghat Tour</option>
                   <option value="Airport Transfer">Airport Transfer Service</option>
@@ -127,7 +129,7 @@ export default function ContactTab() {
                   placeholder="Share your route, dates, or questions"
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
-                  className="w-full bg-transparent border-b border-[#4b4132] focus:border-[#8c7355] outline-none px-2 py-2 text-sm text-[#f4eee4] placeholder:text-[#81796e] resize-none font-medium transition-colors focus-visible:ring-2 focus-visible:ring-[#c5a880]"
+                  className="w-full min-h-28 bg-transparent border-b border-[#4b4132] focus:border-[#8c7355] outline-none px-2 py-2 text-sm text-[#f4eee4] placeholder:text-[#81796e] resize-none font-medium transition-colors focus-visible:ring-2 focus-visible:ring-[#c5a880]"
                 />
               </div>
 
@@ -166,7 +168,7 @@ export default function ContactTab() {
 
           {/* Frosted details card with map embed */}
           <div className="glass-panel rounded-3xl border border-[#c5a880]/20 overflow-hidden luxury-shadow p-5 space-y-4">
-            <div className="rounded-2xl overflow-hidden h-72 border border-[#353238] bg-[#1b1b1f] relative">
+            <div className="rounded-2xl overflow-hidden h-64 sm:h-72 border border-[#353238] bg-[#1b1b1f] relative">
 
               {/* Actual interactive OpenStreetMap embed! Understated & highly professional */}
               <iframe
@@ -175,7 +177,7 @@ export default function ContactTab() {
                 className="w-full h-full border-0 grayscale opacity-90 contrast-100 focus:outline-none"
               ></iframe>
 
-              <div className="absolute top-5 left-5 glass-panel p-4 rounded-xl shadow-lg max-w-[220px] space-y-2 z-10 border border-[#c5a880]/30">
+              <div className="absolute top-3 left-3 sm:top-5 sm:left-5 glass-panel p-3 sm:p-4 rounded-xl shadow-lg max-w-[calc(100%-1.5rem)] sm:max-w-[220px] space-y-2 z-10 border border-[#c5a880]/30">
                 <div className="flex items-center gap-2 font-display text-sm font-bold text-white">
                   <MapPin className="w-4 h-4 text-[#f4eee4]" /> Varanasi, India
                 </div>

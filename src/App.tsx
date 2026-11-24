@@ -163,7 +163,7 @@ export default function App() {
         href="https://wa.me/918577900710?text=Hello%20Kasi%20Tours!%20I'd%20love%20to%20discuss%20a%20luxury%20spiritual%20journey%20to%20Varanasi."
         target="_blank"
         rel="noopener noreferrer"
-        className="fixed bottom-8 right-8 min-w-[56px] min-h-[56px] bg-[#25D366] text-white p-4 rounded-full shadow-2xl hover:scale-110 active:scale-95 transition-transform z-50 flex items-center justify-center cursor-pointer group focus-visible:ring-4 focus-visible:ring-[#25D366]/50 focus-visible:outline-none"
+        className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 lg:bottom-8 lg:right-8 min-w-12 min-h-12 sm:min-w-[56px] sm:min-h-[56px] bg-[#25D366] text-white p-3 sm:p-4 rounded-full shadow-2xl hover:scale-110 active:scale-95 transition-transform z-50 flex items-center justify-center cursor-pointer group focus-visible:ring-4 focus-visible:ring-[#25D366]/50 focus-visible:outline-none"
         aria-label="Contact Varanasi Travel Guide via WhatsApp"
       >
         <MessageCircle className="w-6 h-6 fill-current text-white stroke-none" />
