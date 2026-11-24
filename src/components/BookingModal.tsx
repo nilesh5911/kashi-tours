@@ -16,7 +16,7 @@ const POPULAR_LOCATIONS = [
   "Varanasi Cantt Railway Station",
   "Dashashwamedh Ghat",
   "Assi Ghat",
-  "Chetganj, Kasi Tour HQ",
+  "Chetganj, Kasi Tours HQ",
   "Sarnath Spiritual Complex",
   "Kashi Vishwanath Temple Gateway",
   "Ayodhya (Divine Ram Janmabhoomi)",
@@ -98,7 +98,7 @@ export default function BookingModal({
   };
 
   const handleCreateWhatsAppLink = () => {
-    const text = `Hello Kasi Tour! I would like to book a luxury travel ride:\n` +
+    const text = `Hello Kasi Tours! I would like to book a luxury travel ride:\n` +
       `- *Guest Name:* ${name}\n` +
       `- *Contact Phone:* ${phone}\n` +
       `- *Vehicle Type:* ${currentCar.name} (${currentCar.type})\n` +
@@ -125,7 +125,7 @@ export default function BookingModal({
               <h3 className="font-display text-lg font-semibold tracking-wide">
                 {stage === "form" ? "Book Your Ride" : "Your Spiritual Journey Summary"}
               </h3>
-              <p className="text-[10px] text-[#f4eee4] font-sans uppercase tracking-[0.2em] mt-0.5">KASI TOUR Concierge</p>
+              <p className="text-[10px] text-[#f4eee4] font-sans uppercase tracking-[0.2em] mt-0.5">KASI TOURS Concierge</p>
             </div>
           </div>
           <button
@@ -350,7 +350,7 @@ export default function BookingModal({
             {/* Ticket representation */}
             <div className="bg-[#141417] rounded-xl border border-[#c5a880]/35 overflow-hidden text-left max-w-md mx-auto luxury-shadow">
               <div className="bg-[#c5a880] text-[#17130d] px-4 py-3 flex justify-between items-center text-xs uppercase tracking-widest font-semibold">
-                <span>KASI TOUR VOUCHER</span>
+                <span>KASI TOURS VOUCHER</span>
                 <span className="font-mono text-[10px]">#KT-2026-{(Math.random() * 10000).toFixed(0)}</span>
               </div>
               <div className="p-4 space-y-3 text-xs">

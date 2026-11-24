@@ -40,7 +40,7 @@ export default function FleetTab({ onBookCar }: FleetTabProps) {
               <button onClick={() => onBookCar("innova")} className="min-h-12 rounded-full bg-[#c5a880] px-8 text-[11px] font-bold uppercase tracking-[0.14em] text-[#17130d] shadow-lg shadow-black/25 transition hover:-translate-y-0.5 hover:bg-[#d8bd96] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#e5c299]">
                 Reserve ride now
               </button>
-              <a href="https://wa.me/918577900710?text=Hello%20Kasi%20Tour!%20I%20would%20like%20to%20plan%20a%20ride." target="_blank" rel="noreferrer" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-white/45 bg-black/20 px-7 text-[11px] font-bold uppercase tracking-[0.14em] text-white transition hover:border-[#e5c299] hover:bg-black/35">
+              <a href="https://wa.me/918577900710?text=Hello%20Kasi%20Tours!%20I%20would%20like%20to%20plan%20a%20ride." target="_blank" rel="noreferrer" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-white/45 bg-black/20 px-7 text-[11px] font-bold uppercase tracking-[0.14em] text-white transition hover:border-[#e5c299] hover:bg-black/35">
                 <span className="h-2 w-2 rounded-full bg-[#e5c299]" /> WhatsApp booking
               </a>
             </div>

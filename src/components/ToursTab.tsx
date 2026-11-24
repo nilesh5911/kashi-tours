@@ -37,18 +37,18 @@ export default function ToursTab({ onPlanTrip }: ToursTabProps) {
             Divine Horizons Await
           </h1>
           <p className="font-sans text-sm md:text-base text-gray-300 max-w-2xl mx-auto leading-loose tracking-wide font-light">
-            Experience the exquisite spiritual soul of India with KASI TOUR's exclusive luxury outstation packages. Travel with supreme peace of mind.
+            Experience the exquisite spiritual soul of India with KASI TOURS's exclusive luxury outstation packages. Travel with supreme peace of mind.
           </p>
 
           <div className="pt-8 flex flex-col sm:flex-row gap-6 justify-center items-center">
             <button
-              onClick={() => onPlanTrip("Chetganj, Kasi Tour HQ", "Ayodhya (Divine Ram Janmabhoomi)")}
+              onClick={() => onPlanTrip("Chetganj, Kasi Tours HQ", "Ayodhya (Divine Ram Janmabhoomi)")}
               className="w-full sm:w-auto bg-[#c5a880] text-white font-sans font-bold text-[11px] uppercase tracking-widest px-10 py-4 rounded-full shadow-[0_10px_20px_rgba(197,168,128,0.12)] hover:shadow-[0_15px_30px_rgba(197,168,128,0.18)] transition-all duration-300 transform hover:-translate-y-1 cursor-pointer"
             >
               Explore Ayodhya Route
             </button>
             <button
-              onClick={() => onPlanTrip("Chetganj, Kasi Tour HQ", "Prayagraj (Triveni Sangam)")}
+              onClick={() => onPlanTrip("Chetganj, Kasi Tours HQ", "Prayagraj (Triveni Sangam)")}
               className="w-full sm:w-auto border border-white/30 bg-white/5 hover:bg-white/10 hover:border-white text-white font-sans font-bold text-[11px] uppercase tracking-widest px-10 py-4 rounded-full  transition-all duration-300 cursor-pointer"
             >
               Plan Prayagraj Trip
@@ -80,7 +80,7 @@ export default function ToursTab({ onPlanTrip }: ToursTabProps) {
                 <p className="text-right text-sm font-semibold text-[#f4eee4]">From ₹{getStartingPrice(ex.distanceKm).toLocaleString("en-IN")} <span className="block text-[10px] font-normal text-[#9d9790]">one-way</span></p>
               </div>
               <button
-                onClick={() => onPlanTrip("Chetganj, Kasi Tour HQ", ex.destination)}
+                onClick={() => onPlanTrip("Chetganj, Kasi Tours HQ", ex.destination)}
                 className="w-full min-h-[44px] bg-[#c5a880] text-white hover:opacity-90 font-sans font-bold text-[10px] uppercase tracking-[0.2em] py-3.5 px-4 rounded-full transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer focus-visible:ring-2 focus-visible:ring-[#c5a880] focus-visible:outline-none"
               >
                 Plan trip <ArrowRight className="w-3.5 h-3.5" />
@@ -116,7 +116,7 @@ export default function ToursTab({ onPlanTrip }: ToursTabProps) {
                 <h3 className="font-display text-2xl font-bold tracking-tight">Kashi Darshan</h3>
                 <p className="text-xs text-gray-300 leading-relaxed">Full temple circuits, early morning boat ritual, and local culinary expeditions perfectly organized.</p>
                 <button
-                  onClick={() => onPlanTrip("Chetganj, Kasi Tour HQ", "Kashi Vishwanath Temple Gateway")}
+                  onClick={() => onPlanTrip("Chetganj, Kasi Tours HQ", "Kashi Vishwanath Temple Gateway")}
                   className="font-sans text-xs font-bold text-[#f4b400] uppercase tracking-wider flex items-center gap-1 hover:underline cursor-pointer"
                 >
                   Plan This Tour <ArrowRight className="w-3.5 h-3.5" />
@@ -136,7 +136,7 @@ export default function ToursTab({ onPlanTrip }: ToursTabProps) {
                   <h4 className="font-display text-xl font-bold">Evening Ganga Aarti Seats</h4>
                   <p className="text-xs text-gray-300 max-w-sm mt-1">Pre-reserved prime ghat balcony seating tickets for the spectacular oil lamp light ritual.</p>
                   <button
-                    onClick={() => onPlanTrip("Chetganj, Kasi Tour HQ", "Dashashwamedh Ghat Ganga Aarti")}
+                    onClick={() => onPlanTrip("Chetganj, Kasi Tours HQ", "Dashashwamedh Ghat Ganga Aarti")}
                     className="mt-4 text-xs font-bold text-[#e5c299] uppercase tracking-wider flex items-center gap-1 hover:underline cursor-pointer"
                   >
                     Plan Aarti Visit <ArrowRight className="w-3.5 h-3.5" />

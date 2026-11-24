@@ -1,14 +1,22 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, lazy, Suspense } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { ArrowLeft, MessageCircle } from "lucide-react";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import BookingModal from "./components/BookingModal";
-import CostEstimator from "./components/CostEstimator";
 import FleetTab from "./components/FleetTab";
-import ToursTab from "./components/ToursTab";
-import ComparisonTab from "./components/ComparisonTab";
-import ContactTab from "./components/ContactTab";
+
+// Code-split non-critical tabs and modals to eliminate render-blocking JS
+const BookingModal = lazy(() => import("./components/BookingModal"));
+const CostEstimator = lazy(() => import("./components/CostEstimator"));
+const ToursTab = lazy(() => import("./components/ToursTab"));
+const ComparisonTab = lazy(() => import("./components/ComparisonTab"));
+const ContactTab = lazy(() => import("./components/ContactTab"));
+
+const TabFallback = () => (
+  <div className="min-h-[45vh] flex items-center justify-center" aria-busy="true" aria-label="Loading section">
+    <div className="w-8 h-8 rounded-full border-2 border-[#c5a880]/30 border-t-[#c5a880] animate-spin" />
+  </div>
+);
 
 export default function App() {
   const [currentTab, setCurrentTab] = useState<string>("home");
@@ -52,29 +60,27 @@ export default function App() {
   const renderActiveTab = () => {
     switch (currentTab) {
       case "home":
-        return (
-          <FleetTab onBookCar={handleBookCar} />
-        );
+        return <FleetTab onBookCar={handleBookCar} />;
       case "tours":
         return (
-          <ToursTab 
-            onPlanTrip={handleRouteBooking} 
-          />
+          <Suspense fallback={<TabFallback />}>
+            <ToursTab onPlanTrip={handleRouteBooking} />
+          </Suspense>
         );
       case "comparison":
         return (
-          <ComparisonTab 
-            onBookCarClass={handleBookCar} 
-          />
+          <Suspense fallback={<TabFallback />}>
+            <ComparisonTab onBookCarClass={handleBookCar} />
+          </Suspense>
         );
       case "contact":
         return (
-          <ContactTab />
+          <Suspense fallback={<TabFallback />}>
+            <ContactTab />
+          </Suspense>
         );
       default:
-        return (
-          <FleetTab onBookCar={handleBookCar} />
-        );
+        return <FleetTab onBookCar={handleBookCar} />;
     }
   };
 
@@ -90,10 +96,10 @@ export default function App() {
                   e.preventDefault();
                   returnHome();
                 }}
-                aria-label="KASI TOUR Home" 
+                aria-label="KASI TOURS Home" 
                 className="cursor-pointer transition-transform duration-300 hover:opacity-80 hover:scale-105 focus-visible:ring-2 focus-visible:ring-[#c5a880] focus-visible:outline-none rounded-md inline-flex items-center"
               >
-                <img src="/images/WhatsApp Image 2026-05-31 at 11.27.48 AM-jukebox-bg-removed.png" alt="KASI TOUR" className="h-11 w-auto object-contain" />
+                <img src="/images/WhatsApp Image 2026-05-31 at 11.27.48 AM-jukebox-bg-removed.png" alt="KASI TOURS" className="h-11 w-auto object-contain" />
               </a>
               <button 
                 onClick={returnHome} 
@@ -105,11 +111,13 @@ export default function App() {
           </header>
           <main>
             <div className="mx-auto max-w-4xl px-4 pt-7 text-center sm:px-6 sm:pt-10">
-              <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#e5c299]">KASI TOUR · Transparent fares</p>
+              <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#e5c299]">KASI TOURS · Transparent fares</p>
               <h1 className="mt-2 font-display text-3xl font-semibold text-[#f4eee4] sm:text-4xl">Calculate Your Trip Cost</h1>
               <p className="mx-auto mt-2 max-w-xl text-sm leading-6 text-[#c7c1b8]">Choose a vehicle and pricing option, enter your distance and passenger count, and see your fare update instantly.</p>
             </div>
-            <CostEstimator />
+            <Suspense fallback={<TabFallback />}>
+              <CostEstimator />
+            </Suspense>
           </main>
         </div>
         <Footer 
@@ -152,7 +160,7 @@ export default function App() {
 
       {/* Floating Interactive WhatsApp Call to Action FAB */}
       <a
-        href="https://wa.me/918577900710?text=Hello%20Kasi%20Tour!%20I'd%20love%20to%20discuss%20a%20luxury%20spiritual%20journey%20to%20Varanasi."
+        href="https://wa.me/918577900710?text=Hello%20Kasi%20Tours!%20I'd%20love%20to%20discuss%20a%20luxury%20spiritual%20journey%20to%20Varanasi."
         target="_blank"
         rel="noopener noreferrer"
         className="fixed bottom-8 right-8 min-w-[56px] min-h-[56px] bg-[#25D366] text-white p-4 rounded-full shadow-2xl hover:scale-110 active:scale-95 transition-transform z-50 flex items-center justify-center cursor-pointer group focus-visible:ring-4 focus-visible:ring-[#25D366]/50 focus-visible:outline-none"
@@ -164,14 +172,18 @@ export default function App() {
         </span>
       </a>
 
-      {/* Interactive Booking Modal */}
-      <BookingModal
-        isOpen={isBookingOpen}
-        onClose={() => setIsBookingOpen(false)}
-        selectedCarId={selectedCarId}
-        initialPickup={initialPickup}
-        initialDrop={initialDrop}
-      />
+      {/* Interactive Booking Modal - Lazily loaded on demand */}
+      {isBookingOpen && (
+        <Suspense fallback={null}>
+          <BookingModal
+            isOpen={isBookingOpen}
+            onClose={() => setIsBookingOpen(false)}
+            selectedCarId={selectedCarId}
+            initialPickup={initialPickup}
+            initialDrop={initialDrop}
+          />
+        </Suspense>
+      )}
 
     </div>
   );

@@ -19,12 +19,12 @@ export default function Footer({ onNavTab }: FooterProps) {
         <div className="space-y-5">
           <button
             onClick={handleLogoClick}
-            aria-label="KASI TOUR Home"
+            aria-label="KASI TOURS Home"
             className="flex items-center gap-3 cursor-pointer hover:opacity-85 transition-opacity focus-visible:ring-2 focus-visible:ring-[#c5a880] focus-visible:outline-none rounded-md"
           >
             <img
               src="/images/WhatsApp Image 2026-05-31 at 11.27.48 AM-jukebox-bg-removed.png"
-              alt="KASI TOUR Logo"
+              alt="KASI TOURS Logo"
               className="h-16 w-auto object-contain"
             />
           </button>
@@ -96,7 +96,7 @@ export default function Footer({ onNavTab }: FooterProps) {
       </div>
 
       <div className="mt-16 border-t border-[#4b4132] pt-6 text-center text-[10px] text-[#9d9790] tracking-wider uppercase">
-        <p>© 2026 KASI TOUR. All rights reserved.</p>
+        <p>© 2026 KASI TOURS. All rights reserved.</p>
       </div>
     </footer>
   );

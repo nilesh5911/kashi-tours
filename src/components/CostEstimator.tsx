@@ -78,7 +78,7 @@ export default function CostEstimator() {
             <p className="mt-1 text-sm font-semibold text-[#e5c299]">Contact for Pricing</p>
             <p className="mt-2 text-xs leading-5 text-[#c7c1b8]">Contact our team for a customized quotation for your group.</p>
             <div className="mt-4 grid gap-3 sm:grid-cols-2">
-              <a href="https://wa.me/918577900710?text=Hello%20Kasi%20Tour%2C%20please%20share%20a%20Tempo%20Traveller%20quotation." target="_blank" rel="noreferrer" className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-[#25D366] px-4 text-xs font-bold uppercase tracking-wide text-white"><MessageCircle className="h-4 w-4" /> WhatsApp</a>
+              <a href="https://wa.me/918577900710?text=Hello%20Kasi%20Tours%2C%20please%20share%20a%20Tempo%20Traveller%20quotation." target="_blank" rel="noreferrer" className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-[#25D366] px-4 text-xs font-bold uppercase tracking-wide text-white"><MessageCircle className="h-4 w-4" /> WhatsApp</a>
               <a href="tel:+918577900710" className="inline-flex min-h-11 items-center justify-center rounded-lg border border-[#c5a880]/40 px-4 text-xs font-bold uppercase tracking-wide text-[#f4eee4]">Call 85779 00710</a>
             </div>
           </div>}

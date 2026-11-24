@@ -19,7 +19,7 @@ export default function ContactTab() {
   const handleSubmitInquiry = (e: React.FormEvent) => {
     e.preventDefault();
     if (name && phone) {
-      const inquiry = `Hello Kasi Tour! I’d like to ask about ${serviceType}.\nName: ${name}\nPhone: ${phone}\nDetails: ${message}`;
+      const inquiry = `Hello Kasi Tours! I’d like to ask about ${serviceType}.\nName: ${name}\nPhone: ${phone}\nDetails: ${message}`;
       window.open(`https://wa.me/918577900710?text=${encodeURIComponent(inquiry)}`, "_blank", "noopener,noreferrer");
       setSubmitted(true);
       setTimeout(() => {
@@ -69,7 +69,7 @@ export default function ContactTab() {
             <div className="glass-panel-dark border border-[#c5a880]/30 p-8 rounded-2xl text-center space-y-4 luxury-shadow">
               <CheckCircle className="w-16 h-16 text-[#f4eee4] mx-auto" />
               <h3 className="font-display text-xl font-bold text-white">Inquiry Ready</h3>
-              <p className="text-xs text-gray-300 leading-relaxed font-light">Your inquiry is ready in WhatsApp. Review it there and send it to reach the KASI TOUR team.</p>
+              <p className="text-xs text-gray-300 leading-relaxed font-light">Your inquiry is ready in WhatsApp. Review it there and send it to reach the KASI TOURS team.</p>
             </div>
           ) : (
             <form onSubmit={handleSubmitInquiry} className="space-y-6">
@@ -144,7 +144,7 @@ export default function ContactTab() {
             <span className="text-[10px] font-sans font-bold uppercase tracking-widest text-[#f4eee4] block">Immediate Assistance</span>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <a
-                href="https://wa.me/918577900710?text=Hello%20Kasi%20Tour!%20I%20need%20immediate%20spiritual%20travel%20assistance."
+                href="https://wa.me/918577900710?text=Hello%20Kasi%20Tours!%20I%20need%20immediate%20spiritual%20travel%20assistance."
                 target="_blank"
                 rel="noreferrer"
                 className="min-h-[44px] bg-[#c5a880] hover:opacity-90 text-white py-3.5 px-4 rounded-xl text-[10px] font-bold uppercase tracking-[0.1em] flex items-center justify-center gap-2 shadow-sm transition-all duration-300 focus-visible:ring-2 focus-visible:ring-[#c5a880] focus-visible:outline-none"
@@ -222,7 +222,7 @@ export default function ContactTab() {
             <div className="space-y-1 pt-1">
               <span className="text-[10px] font-sans font-bold uppercase tracking-[0.2em] text-[#f4eee4]">Office Address</span>
               <p className="text-xs font-semibold text-white leading-loose">
-                Kasi Tour HQ, Dashashwamedh Road, Near Kashi Vishwanath Temple, Varanasi, Uttar Pradesh 221001, India
+                Kasi Tours HQ, Dashashwamedh Road, Near Kashi Vishwanath Temple, Varanasi, Uttar Pradesh 221001, India
               </p>
             </div>
           </div>

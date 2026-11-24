@@ -67,12 +67,12 @@ export default function Header({ currentTab, setTab, onOpenBookingModal }: Heade
       <div className="max-w-[1280px] mx-auto px-6 md:px-12 flex justify-between items-center">
         <button
           onClick={handleLogoClick}
-          aria-label="KASI TOUR Home"
+          aria-label="KASI TOURS Home"
           className="transition-transform duration-300 hover:opacity-80 hover:scale-105 focus-visible:ring-2 focus-visible:ring-[#c5a880] focus-visible:outline-none rounded-md cursor-pointer"
         >
           <img
             src="/images/WhatsApp Image 2026-05-31 at 11.27.48 AM-jukebox-bg-removed.png"
-            alt="KASI TOUR Logo"
+            alt="KASI TOURS Logo"
             className="h-14 w-auto object-contain"
           />
         </button>
@@ -147,12 +147,12 @@ export default function Header({ currentTab, setTab, onOpenBookingModal }: Heade
         <div className="flex justify-between items-center p-4 border-b border-[#353238]">
           <button
             onClick={handleLogoClick}
-            aria-label="KASI TOUR Home"
+            aria-label="KASI TOURS Home"
             className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity focus-visible:ring-2 focus-visible:ring-[#c5a880] focus-visible:outline-none rounded-md"
           >
             <img
               src="/images/WhatsApp Image 2026-05-31 at 11.27.48 AM-jukebox-bg-removed.png"
-              alt="KASI TOUR Logo"
+              alt="KASI TOURS Logo"
               className="h-10 w-auto object-contain"
             />
           </button>
@@ -207,7 +207,7 @@ export default function Header({ currentTab, setTab, onOpenBookingModal }: Heade
           </button>
 
           <a
-            href="https://wa.me/918577900710?text=Hello%20Kasi%20Tour!%20I'd%20love%20to%20discuss%20a%20luxury%20spiritual%20journey%20to%20Varanasi."
+            href="https://wa.me/918577900710?text=Hello%20Kasi%20Tours!%20I'd%20love%20to%20discuss%20a%20luxury%20spiritual%20journey%20to%20Varanasi."
             target="_blank"
             rel="noopener noreferrer"
             onClick={closeMobileMenu}

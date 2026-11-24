@@ -83,7 +83,7 @@ export default function VedicPujaSection() {
               Explore VedicSeva <ExternalLink className="h-4 w-4" />
             </a>
             <a
-              href="https://wa.me/918577900710?text=Hello%20Kasi%20Tour%20%26%20VedicSeva!%20I%20would%20like%20to%20book%20a%20certified%20Pandit%20for%20Vedic%20Puja%20Seva%20in%20Varanasi."
+              href="https://wa.me/918577900710?text=Hello%20Kasi%20Tours%20%26%20VedicSeva!%20I%20would%20like%20to%20book%20a%20certified%20Pandit%20for%20Vedic%20Puja%20Seva%20in%20Varanasi."
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full border border-white/20 bg-white/5 hover:bg-white/10 hover:border-white px-6 py-3.5 text-xs font-bold uppercase tracking-widest text-white transition-all duration-300 cursor-pointer text-center"
